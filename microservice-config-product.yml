@@ -1,0 +1,149 @@
+spring:
+  profiles:
+    active: dev #激活开发环境
+
+---
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.mengxuegu.springcloud.entities  # 所有Entity别名类所在包
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+
+spring:
+  profiles: dev #开发环境
+  application:
+    name: microservice-product #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+    #数据源配置
+  datasource:
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:23306/springcloud_db01?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 初始连接个数
+      initial-size: 5
+      # 最小连接池数量
+      min-idle: 5
+      # 最大连接池数量
+      max-active: 20
+      # 获取连接时最大等待时间，单位为毫秒
+      max-wait: 5000
+      # 状态监控
+      filter:
+        stat:
+          # 使能状态监控
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      # 监控过滤器
+      web-stat-filter:
+        enabled: true
+        # 配置过滤器不拦截哪些uri
+        exclusions:
+          - "*.js"
+          - "*.gif"
+          - "*.jpg"
+          - "*.png"
+          - "*.css"
+          - "*.ico"
+          - "/druid/*"
+      # druid 监控页面
+      stat-view-servlet:
+        enabled: true
+        # 配置监控界面uri
+        url-pattern: /druid/*
+        reset-enable: false
+        # 配置登陆用户名
+        login-username: root
+        # 配置登陆密码
+        login-password: root
+
+eureka:
+  client:
+    #服务注册开关
+    register-with-eureka: true
+    #服务发现开关
+    fetch-registry: true
+    service-url: #注册到哪一个Eureka注册中心，多个用逗号分割
+      defaultZone: http://eureka6001.com:6001/eureka
+    #指定实例id，就不会显示主机名了
+    instance-id:  ${spring.application.name}:${server.port}
+    #访问路径可以显示ip地址
+    prefer-ip-address: true
+
+---
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+  type-aliases-package: com.mengxuegu.springcloud.entities  # 所有Entity别名类所在包
+  mapper-locations: classpath:mybatis/mapper/**/*.xml       # mapper映射文件
+
+spring:
+  profiles: prod #开发环境
+  application:
+    name: microservice-product #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+    #数据源配置
+  datasource:
+    username: root
+    password: 123
+    url: jdbc:mysql://localhost:23306/springcloud_db02?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 初始连接个数
+      initial-size: 5
+      # 最小连接池数量
+      min-idle: 5
+      # 最大连接池数量
+      max-active: 20
+      # 获取连接时最大等待时间，单位为毫秒
+      max-wait: 5000
+      # 状态监控
+      filter:
+        stat:
+          # 使能状态监控
+          enabled: true
+          db-type: mysql
+          log-slow-sql: true
+          slow-sql-millis: 2000
+      # 监控过滤器
+      web-stat-filter:
+        enabled: true
+        # 配置过滤器不拦截哪些uri
+        exclusions:
+          - "*.js"
+          - "*.gif"
+          - "*.jpg"
+          - "*.png"
+          - "*.css"
+          - "*.ico"
+          - "/druid/*"
+      # druid 监控页面
+      stat-view-servlet:
+        enabled: true
+        # 配置监控界面uri
+        url-pattern: /druid/*
+        reset-enable: false
+        # 配置登陆用户名
+        login-username: root
+        # 配置登陆密码
+        login-password: root
+
+eureka:
+  client:
+    #服务注册开关
+    register-with-eureka: true
+    #服务发现开关
+    fetch-registry: true
+    service-url: #注册到哪一个Eureka注册中心，多个用逗号分割
+      defaultZone: http://eureka6001.com:6001/eureka
+    #指定实例id，就不会显示主机名了
+    instance-id:  ${spring.application.name}:${server.port}
+    #访问路径可以显示ip地址
+    prefer-ip-address: true
