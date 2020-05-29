@@ -38,4 +38,4 @@ eureka:
       #集群版,配置对方地址
       # defaultZone: http://eureka6001.com:6001/eureka/
   server:
-    enable-self-preservation: false # 开启自我保护机制
+    enable-self-preservation: true # 开启自我保护机制

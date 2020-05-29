@@ -3,7 +3,7 @@ spring:
     active: dev #激活开发环境
 
 emp:
-  name: haha
+  name: wuhua
 
 ---
 server:
